@@ -42,10 +42,15 @@ const main = async () => {
   /**
    * TODO: Using `reportHtml` here isn't working. It results in a blank PDF. It may
    * be because of the complexity but I'm not sure.
+   *
+   * Using `simpleHtml` works consistently.
    */
   await converter.insertFromHtmlString(reportHtml);
 
   if (await converter.convert(doc)) {
+    console.info(
+      `PDF created from HTML successfully. Saving to ${FILE_PATH} ...`,
+    );
     await doc.save(FILE_PATH, PDFNet.SDFDoc.SaveOptions.e_linearized);
   } else {
     console.log(
@@ -57,4 +62,7 @@ const main = async () => {
 
 await PDFNet.runWithCleanup(main, process.env.PDFNET_KEY);
 await PDFNet.shutdown();
+
+console.info(`Opening ${FILE_PATH} ... `);
 await fs.promises.open(FILE_PATH, 'r');
+console.info('✅ Done');
