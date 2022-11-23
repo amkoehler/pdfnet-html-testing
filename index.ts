@@ -10,12 +10,7 @@ if (!process.env.PDFNET_KEY) {
 const { PDFNet } = PDFNetNode;
 const FILE_PATH = './result.pdf';
 
-function test(value: string) {
-  console.log(value);
-}
-
 async function run() {
-  test(1234);
   const reportHtml = await fs.promises.readFile('./report.html', {
     encoding: 'utf-8',
   });
